@@ -17,6 +17,8 @@ class ToolBox:
 
         self.pressed_button = pg.event.Event(pg.USEREVENT, {'button': 'hand'})
 
+        pg.draw.rect(window, 'blue', self.text_rects[0], 1)
+
     def render(self):
         for i in range(3):
             self.surface.blit(self.text_buttons[i], self.text_rects[i])
