@@ -11,6 +11,7 @@ class DrawWindow:
         self.button = 'hand'
         self.prev_mouse = (0, 0, 0, 0, 0)
         self.font = pg.font.SysFont('latohairline', 15)
+        self.line_begin = False
 
     def draw(self):
         window.blit(self.surface, (0, 30))
@@ -20,9 +21,19 @@ class DrawWindow:
         for event in pg.event.get():
             if event.type == pg.USEREVENT:
                 self.button = event.button
+
             if self.prev_mouse[0] and not pg.mouse.get_pressed()[0] and pos[1] > 30:
                 if self.button == 'point':
                     pg.draw.circle(self.surface, 'black', (pos[0], pos[1] - 30), 2)
+
+                if self.button == 'line':
+                    if self.line_begin:
+                        line_begin = (self.line_begin[0], self.line_begin[1] - 30)
+                        line_end = (pos[0], pos[1] - 30)
+                        pg.draw.line(self.surface, 'black', line_begin, line_end, 1)
+                        self.line_begin = False
+                    else:
+                        self.line_begin = pos
 
         self.prev_mouse = pg.mouse.get_pressed()
 
@@ -33,3 +44,6 @@ class DrawWindow:
             rect.bottomleft = pos
             window.blit(text, rect)
             pg.draw.rect(window, 'black', rect, 1)
+
+            if self.line_begin:
+                pg.draw.line(window, 'black', self.line_begin, pos, 1)
