@@ -26,7 +26,7 @@ class DrawWindow:
 
         self.prev_mouse = pg.mouse.get_pressed()
 
-        if self.button == 'point' and pos[1] >= 40:
+        if pos[1] >= 40:
             pg.draw.circle(window, 'black', pos, 2)
             text = self.font.render('  {}, {}  '.format(*pos), False, 'black')
             rect = text.get_rect()
