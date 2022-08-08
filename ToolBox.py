@@ -7,7 +7,7 @@ class ToolBox:
     def __init__(self):
         self.surface = pg.Surface((500, 30))
         font = pg.font.SysFont('latohairline', 20)
-        self.texts = ['hand', 'point', 'line']
+        self.texts = ['hand', 'point', 'line', 'rect', 'circle']
         self.text_buttons = [font.render(i.ljust(6, ' '), False, 'white') for i in self.texts]
         self.text_rects = [i.get_rect() for i in self.text_buttons]
         self.text_rects[0].topleft = (5, 0)
@@ -20,7 +20,7 @@ class ToolBox:
         pg.draw.rect(window, 'blue', self.text_rects[0], 1)
 
     def render(self):
-        for i in range(3):
+        for i in range(len(self.texts)):
             self.surface.blit(self.text_buttons[i], self.text_rects[i])
             window.blit(self.surface, (0, 0))
 
@@ -28,7 +28,7 @@ class ToolBox:
         mp = pg.mouse.get_pressed()
         if mp[0]:
             pp = pg.mouse.get_pos()
-            for i in range(3):
+            for i in range(len(self.texts)):
                 if self.text_rects[i].collidepoint(pp):
                     self.pressed_button.button = self.texts[i]
                     pg.event.post(self.pressed_button)
