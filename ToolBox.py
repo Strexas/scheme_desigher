@@ -7,7 +7,7 @@ class ToolBox:
     def __init__(self):
         self.surface = pg.Surface((500, 30))
         font = pg.font.SysFont('latohairline', 20)
-        self.texts = ['hand', 'point', 'line', 'rect', 'circle']
+        self.texts = ['point', 'line', 'rect', 'circle']
         self.text_buttons = [font.render(i.ljust(6, ' '), False, 'white') for i in self.texts]
         self.text_rects = [i.get_rect() for i in self.text_buttons]
         self.text_rects[0].topleft = (5, 0)

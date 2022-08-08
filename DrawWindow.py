@@ -26,7 +26,7 @@ class DrawWindow:
             if event.type == pg.USEREVENT:
                 self.button = event.button
 
-            if self.prev_mouse[0] and not pg.mouse.get_pressed()[0] and pos[1] > 30:
+            if self.prev_mouse[0] and not pg.mouse.get_pressed()[0] and pos[1] >= 40:
                 if self.button == 'point':
                     pg.draw.circle(self.surface, 'black', (pos[0], pos[1] - 30), 2)
 
