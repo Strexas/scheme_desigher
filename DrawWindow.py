@@ -10,6 +10,7 @@ class DrawWindow:
         self.original_window = window.copy()
         self.button = 'hand'
         self.prev_mouse = (0, 0, 0, 0, 0)
+        self.font = pg.font.SysFont('latohairline', 15)
 
     def draw(self):
         window.blit(self.surface, (0, 30))
@@ -27,3 +28,8 @@ class DrawWindow:
 
         if self.button == 'point' and pos[1] >= 40:
             pg.draw.circle(window, 'black', pos, 2)
+            text = self.font.render('  {}, {}  '.format(*pos), False, 'black')
+            rect = text.get_rect()
+            rect.bottomleft = pos
+            window.blit(text, rect)
+            pg.draw.rect(window, 'black', rect, 1)
