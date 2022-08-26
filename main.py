@@ -26,6 +26,9 @@ while event_handler.live:
         event_handler.window = 'Drawing'
     elif event_handler.window == 'Drawing':
         tool_box.hand()
+        draw_window.hand()
         draw_window.draw()
+    else:
+        main_window.render()
     pg.display.flip()
 pg.quit()

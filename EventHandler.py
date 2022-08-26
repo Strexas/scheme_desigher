@@ -13,9 +13,12 @@ class EventHandler:
         self.pressed_button = 'Hand'
 
     def hand(self):
-        if pg.key.get_pressed()[pg.K_q]:
+        keys = pg.key.get_pressed()
+        if keys[pg.K_q]:
             self.live = False
             return
+        if keys[pg.K_ESCAPE]:
+            self.window = 'MainWindow'
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 self.live = False

@@ -16,10 +16,40 @@ class DrawWindow:
         self.line_begin = False
         self.rect_begin = False
         self.circle_begin = False
+        self.draw_objects = []
 
     def draw(self):
         window.blit(self.surface, (0, 30))
 
+        pos = pg.mouse.get_pos()
+
+        if pos[1] >= 40:
+            pg.draw.circle(window, 'black', pos, 2)
+            text = self.font.render('  {}, {}  '.format(*pos), False, 'black')
+            rect = text.get_rect()
+            rect.bottomleft = pos
+            window.blit(text, rect)
+            pg.draw.rect(window, 'black', rect, 1)
+
+            if self.line_begin and self.button == 'line':
+                pg.draw.line(window, 'black', self.line_begin, pos, 1)
+
+            if self.rect_begin and self.button == 'rect':
+                w, h = abs(pos[0] - self.rect_begin[0]), abs(pos[1] - self.rect_begin[1])
+                x_b, y_b = min(pos[0], self.rect_begin[0]), min(pos[1], self.rect_begin[1])
+                pg.draw.rect(window, 'black', (x_b, y_b, w, h), 1)
+
+            if self.circle_begin and self.button == 'circle':
+                r = math.sqrt(pow(pos[0] - self.circle_begin[0], 2) + pow(pos[1] - self.circle_begin[1], 2))
+                pg.draw.circle(
+                    window,
+                    'black',
+                    (self.circle_begin[0], self.circle_begin[1]),
+                    min(self.circle_begin[1] - 30, r),
+                    1
+                )
+
+    def hand(self):
         pos = pg.mouse.get_pos()
 
         for event in pg.event.get():
@@ -63,29 +93,3 @@ class DrawWindow:
                         self.circle_begin = pos
 
         self.prev_mouse = pg.mouse.get_pressed()
-
-        if pos[1] >= 40:
-            pg.draw.circle(window, 'black', pos, 2)
-            text = self.font.render('  {}, {}  '.format(*pos), False, 'black')
-            rect = text.get_rect()
-            rect.bottomleft = pos
-            window.blit(text, rect)
-            pg.draw.rect(window, 'black', rect, 1)
-
-            if self.line_begin and self.button == 'line':
-                pg.draw.line(window, 'black', self.line_begin, pos, 1)
-
-            if self.rect_begin and self.button == 'rect':
-                w, h = abs(pos[0] - self.rect_begin[0]), abs(pos[1] - self.rect_begin[1])
-                x_b, y_b = min(pos[0], self.rect_begin[0]), min(pos[1], self.rect_begin[1])
-                pg.draw.rect(window, 'black', (x_b, y_b, w, h), 1)
-
-            if self.circle_begin and self.button == 'circle':
-                r = math.sqrt(pow(pos[0] - self.circle_begin[0], 2) + pow(pos[1] - self.circle_begin[1], 2))
-                pg.draw.circle(
-                    window,
-                    'black',
-                    (self.circle_begin[0], self.circle_begin[1]),
-                    min(self.circle_begin[1] - 30, r),
-                    1
-                )
